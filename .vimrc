@@ -11,6 +11,7 @@ Plug 'sirver/ultisnips' "Sniplets
 Plug 'ervandew/supertab' "TAB key
 Plug 'scrooloose/syntastic'
 Plug 'rhysd/vim-clang-format'
+Plug 'airblade/vim-gitgutter'
 
 "colorschemes
 Plug 'morhetz/gruvbox'
@@ -24,8 +25,8 @@ let base16colorspace=256  " Access colors present in 256 colorspace
 call plug#end()
 
 syntax enable
-set background=dark
-colorscheme molokai
+"set background=dark
+"colorscheme molokai
 set noexpandtab "замена таба пробелом
 set tabstop=4 "Установка размера таба
 set softtabstop=4
@@ -37,11 +38,12 @@ set incsearch "Подсветка первого вхождения поиск
 "mappings
 map <C-n> :NERDTreeToggle<CR>
 map <Leader> <Plug>(easymotion-prefix)
+map <F4> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 "nnoremap <F3> :CtrlPSmartTabs<CR>
 "nnoremap <F4> :CtrlP<CR>
 
-map <C-t> :tabnew<CR>
+map <C-S-T> :tabnew<CR>
 map <C-x> :tabNext<CR>
 nnoremap <C-\> :!g++ % -o %.o -std=c++11 && ./%.o<CR> 
 
@@ -70,6 +72,18 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+"GitGutter settings
+highlight! link SignColumn LineNr
+let g:gitgutter_set_sign_backgrounds = 1
+highlight GitGutterAdd    guifg=#009900 ctermfg=2
+highlight GitGutterChange guifg=#bbbb00 ctermfg=3
+highlight GitGutterDelete guifg=#ff2222 ctermfg=1
+set updatetime=250
+" Keymaps for hunk stage, undo & preview chunk
+nmap <Leader>ga <Plug>(GitGutterStageHunk)  " git add (chunk)
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)   " git undo (chunk)
+nmap <Leader>gp <Plug>(GitGutterPreviewHunk)
 
 let g:clang_format#style_options = {
 			 \	"BasedOnStyle": "Chromium",
